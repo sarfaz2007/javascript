@@ -1,0 +1,7 @@
+:root{
+    --background: green;
+}
+
+h1{
+    background: var(--background);
+}
