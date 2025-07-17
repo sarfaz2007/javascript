@@ -1,33 +1,72 @@
-const todoForm = document.querySelector('form');
+const todoForm = document.querySelector("form")
 const todoInput = document.getElementById('todo-input');
-const todoListUL = document.getElementById('todo-list');
+const todoUl = document.getElementById('todo-list');
 
-let allTodos = [];
+let allTodos = getTodos();
+updateTodoList();
 
 todoForm.addEventListener('submit',function(e){
     e.preventDefault();
-    
+    console.log("hyfutfy");
+    addTodo();
 })
 
-function addTodo(){
-    const todoText = todoInput.ariaValueMax.trim();
-    if(todoText.length > 0){
-        allTodos.push(ttodotext);
-        createTodoItem(todotext);
-        todoInput.value = "";
 
+
+
+
+function addTodo(){
+    const todoText = todoInput.value.trim();
+    console.log(todoText);
+    if(todoText.length > 0){
+
+        console.log("inside if");
+        allTodos.push(todoText);
+        updateTodoList();
+        saveTodos();
+        console.log(saveTodos);
+        const todoLi = createTodoItem(todoText, allTodos.length -1);
+        console.log(todoLi);
+        todoUl.appendChild(todoLi)
+        todoInput.value = "";
     }
 }
-
-function updateTdodList(){
-    todoListUL.innerHTML = "";
-    allTodos.forEach((todo, todoIntex)=>{
-        
-    })
-
-}
-function createTodoItem(todo){
+function createTodoItem(todo, todoIndex) {
+    console.log(todo);
+    console.log(todoIndex);
+    const todoId = "todo" + todoIndex;
     const todoLI = document.createElement("li");
-    todoLi.innerteText = todo;
-    todoListUL.append(todoLI);
+    todoLI.className = "todo";
+    todoLI.innerHTML = `
+        <input type="checkbox" id="${todoId}">
+        <label for="${todoId}" class="custom-checkbox">
+            <img src="icons/check_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" alt="svg image">
+            <!-- <i class="fa-solid fa-square-check"></i> -->
+        </label>
+        <label for="${todoId}" class="todo-text">
+            ${todo}
+        </label>
+        <button class="delete-button">
+            <!-- <img src="icons/delete_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" alt="svg image"> -->
+            <i class="fa-solid fa-trash" style="font-size: 20px; color: #fff;"></i>
+        </button>
+    `
+    const deleteButton = todoLI.querySelector(".delete-button")
+    deleteButton.addEventListener("click", ()=>{
+      deleteTodoItem(todoindex)
+    });
+    return todoLI;
+} 
+function deleteTodoItem(todoindex){
+    allTodos = allTodos.filter((_, i)=> i !== todoindex);
+}
+
+function saveTodos(){
+    const todosJson = JSON.stringify(allTodos);
+    localStorage.setItem("todos", todosJson);
+}
+function getTodos(){
+    const todos = localStorage.getItem("todos") || "[]";
+    return JSON.parse(todos);
+
 }
