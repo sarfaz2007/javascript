@@ -12,8 +12,8 @@ todoForm.addEventListener('submit',function(e){
 function addTodo(){
     const todoText = todoInput.ariaValueMax.trim();
     if(todoText.length > 0){
-        allTodos.push(ttodotext);
-        createTodoItem(todotext);
+        allTodos.push(todoText);
+        createTodoItem(todoText);
         todoInput.value = "";
 
     }
@@ -22,12 +22,12 @@ function addTodo(){
 function updateTdodList(){
     todoListUL.innerHTML = "";
     allTodos.forEach((todo, todoIntex)=>{
-        
+          
     })
 
 }
 function createTodoItem(todo){
     const todoLI = document.createElement("li");
-    todoLi.innerteText = todo;
+    todoLI.innerteText = todo;
     todoListUL.append(todoLI);
 }
